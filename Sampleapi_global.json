@@ -1,0 +1,30 @@
+{
+	"info": {
+		"_postman_id": "f72f7553-9c11-4392-b985-62a88fdd85af",
+		"name": "Sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33224813"
+	},
+	"item": [
+		{
+			"name": "GetUserRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/public/v2/users/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

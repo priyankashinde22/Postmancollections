@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "8a4046a5-b3f8-4980-bb8b-f5fb9ebe097c",
+		"name": "DataDrivenAPITest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33224813"
+	},
+	"item": [
+		{
+			"name": "1-CreateData",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"requestJson\",JSON.stringify(pm.iterationData.toObject()));",
+							"//data.json--read--pm.iterationData(JSON)---toObejct--JS--stringify--JSON"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{requestJson}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://httpbin.org/post",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2-CreateUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User data is correct\", function () {",
+							"   const response =pm.response.json();//actual response",
+							"   ",
+							"    pm.expect(response.name).eql(pm.iterationData.get(\"name\"));",
+							"    pm.expect(response.gender).eql(pm.iterationData.get(\"gender\"));",
+							"    pm.expect(response.status).eql(pm.iterationData.get(\"status\"));",
+							"   // pm.expect(response.email).eql(om.iterationData.get(\"email\"));",
+							"",
+							"//check the email",
+							"   const rawBody = pm.request.body.raw;//json string",
+							"    const requestBody =JSON.parse(rawBody) //json to JS object",
+							"",
+							"       const email_id= requestBody.email;",
+							"       console.log(email_id);",
+							"       pm.expect(response.email).to.eql(email_id);",
+							"",
+							"",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 3a4b0a49900711edb98b1938cca203da769fb7c36bb10bae069b33d4314caca6",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{name}}\",\n    \"gender\":\"{{gender}}\",\n    \"email\":\"{{$randomEmail}}\",\n    \"status\":\"{{status}}\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
